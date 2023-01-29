@@ -1,70 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Random Word Generator</title>
+    <script>
+      function toggleClick(el) {
+        el.style.pointerEvents = "none";
+        localStorage.setItem(el.innerHTML, "disabled");
+      }
+      window.onload = function() {
+        var links = document.getElementsByTagName("a");
+        for (var i = 0; i < links.length; i++) {
+          if (localStorage.getItem(links[i].innerHTML) === "disabled") {
+            links[i].style.pointerEvents = "none";
+          }
+        }
+      };
+    </script>
   </head>
   <body>
-    <h1 id="word"></h1>
-    <button onclick="generateWord()">Generate Word</button>
-
-    <script>
-      const fruitsVeggies = [
-        "Apple",
-        "Banana",
-        "Orange",
-        "Grapes",
-        "Pineapple",
-        "Mango",
-        "Strawberry",
-        "Cherry",
-        "Blueberry",
-        "Raspberry",
-        "Blackberry",
-        "Melon",
-        "Watermelon",
-        "Cantaloupe",
-        "Honeydew",
-        "Kiwi",
-        "Peach",
-        "Apricot",
-        "Plum",
-        "Nectarine",
-        "Grapefruit",
-        "Lime",
-        "Lemon",
-        "Carrot",
-        "Potato",
-        "Sweet Potato",
-        "Onion",
-        "Garlic",
-        "Leeks",
-        "Squash",
-        "Zucchini",
-        "Cucumber",
-        "Tomatoes",
-        "Bell Pepper",
-        "Chili Pepper",
-        "Radish",
-        "Beetroot",
-        "Eggplant",
-        "Broccoli",
-        "Cauliflower",
-        "Cabbage",
-        "Kale",
-        "Spinach",
-        "Lettuce",
-        "Arugula",
-        "Chard",
-        "Collard Greens",
-        "Brussels Sprouts",
-        "Asparagus",
-        "Turnip"
-      ];
-
-      function generateWord() {
-        const word = fruitsVeggies[Math.floor(Math.random() * fruitsVeggies.length)];
-        document.querySelector("#word").textContent = word;
-      }
-    </script>
+    <p>Click on the words:</p>
+    <p><a onclick="toggleClick(this)" href="#">Word 1</a></p>
+    <p><a onclick="toggleClick(this)" href="#">Word 2</a></p>
+    <p><a onclick="toggleClick(this)" href="#">Word 3</a></p>
+    <p><a onclick="toggleClick(this)" href="#">Word 4</a></p>
+    <p><a onclick="toggleClick(this)" href="#">Word 5</a></p>
   </body>
 </html>
