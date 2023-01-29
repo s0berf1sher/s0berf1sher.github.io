@@ -2,26 +2,23 @@
 <html>
   <head>
     <script>
-      function toggleClick(el) {
-        el.style.pointerEvents = "none";
-        localStorage.setItem(el.innerHTML, "disabled");
-      }
       window.onload = function() {
-        var links = document.getElementsByTagName("a");
-        for (var i = 0; i < links.length; i++) {
-          if (localStorage.getItem(links[i].innerHTML) === "disabled") {
-            links[i].style.pointerEvents = "none";
-          }
+        if (localStorage.getItem("clicked")) {
+          document.getElementById("myButton").disabled = true;
         }
       };
+
+      function displayWord() {
+        var words = ["Ethereal", "Serendipitous", "Pensive", "Luminous", "Whimsical"];
+        var randomIndex = Math.floor(Math.random() * words.length);
+        document.getElementById("display").innerHTML = words[randomIndex];
+        document.getElementById("myButton").disabled = true;
+        localStorage.setItem("clicked", true);
+      }
     </script>
   </head>
   <body>
-    <p>Click on the words:</p>
-    <p><a onclick="toggleClick(this)" href="#">Word 1</a></p>
-    <p><a onclick="toggleClick(this)" href="#">Word 2</a></p>
-    <p><a onclick="toggleClick(this)" href="#">Word 3</a></p>
-    <p><a onclick="toggleClick(this)" href="#">Word 4</a></p>
-    <p><a onclick="toggleClick(this)" href="#">Word 5</a></p>
+    <button id="myButton" onclick="displayWord()">Display Word</button>
+    <p id="display"></p>
   </body>
 </html>
