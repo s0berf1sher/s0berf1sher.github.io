@@ -2,43 +2,44 @@
 <html>
   <head>
     <script>
-      var fruitCounter = {};
-      var fruits = ["Apple", "Banana", "Cherry", "Grape", "Kiwi"];
-
       window.onload = function() {
-        if (!localStorage.getItem("fruitCounter")) {
-          localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
+        if (localStorage.getItem("wordsShown")) {
+          var wordsShown = JSON.parse(localStorage.getItem("wordsShown"));
         } else {
-          fruitCounter = JSON.parse(localStorage.getItem("fruitCounter"));
+          var wordsShown = [];
         }
-        if (Object.values(fruitCounter).every(val => val >= 2)) {
+        if (wordsShown.length === 5) {
           document.getElementById("myButton").disabled = true;
         }
       };
-
-      function displayFruit() {
-        var randomIndex = Math.floor(Math.random() * fruits.length);
-        while (fruitCounter[fruits[randomIndex]] >= 2) {
-          randomIndex = Math.floor(Math.random() * fruits.length);
-        }
-        document.getElementById("display").innerHTML = fruits[randomIndex];
-        fruitCounter[fruits[randomIndex]] = (fruitCounter[fruits[randomIndex]] || 0) + 1;
-        localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
-        if (Object.values(fruitCounter).every(val => val >= 2)) {
-          document.getElementById("myButton").disabled = true;
-        }
-      }
-    </script>
+      function displayWord() {
+    var words = ["Ethereal", "Serendipitous", "Pensive", "Luminous", "Whimsical"];
+    var wordsLeft = words.filter(word => !JSON.parse(localStorage.getItem("wordsShown")).includes(word));
+    if (wordsLeft.length === 0) {
+      document.getElementById("myButton").disabled = true;
+      return;
+    }
+    var randomIndex = Math.floor(Math.random() * wordsLeft.length);
+    document.getElementById("display").innerHTML = wordsLeft[randomIndex];
+    var wordsShown = JSON.parse(localStorage.getItem("wordsShown")) || [];
+    wordsShown.push(wordsLeft[randomIndex]);
+    localStorage.setItem("wordsShown", JSON.stringify(wordsShown));
+    if (wordsShown.length === 5) {
+      document.getElementById("myButton").disabled = true;
+    }
+  }
+</script>
   </head>
   <body>
-     <p>Hallo<br />Klicke auf diesen Button um dein Wort zu erhalten.</p>
-    <button id="myButton" onclick="displayFruit()">Display Fruit</button>
+    <p> Hallo </p>
+    <button id="myButton" onclick="displayWord()">Display Word</button>
     <p id="display"></p>
-<p>Mach am besten einen Screenshot, um das Wort nicht zu vergessen.</p>
-<p>Mach mit der Person ein Bild und schick es mir</p>   
-<p>Für jedes Paar gibt es einen Preis</p>
+    <p> Ea gibt einen Preis </p>
   </body>
 </html>
+
+
+
 
 
 
