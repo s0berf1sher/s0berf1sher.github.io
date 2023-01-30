@@ -1,45 +1,34 @@
-<!DOCTYPE html>
 <html>
   <head>
     <script>
+      var fruits = ["Apfel", "Banane", "Kiwi"];
+      var displayed = [];
+      
+      function showWord() {
+        if (fruits.length == 0) {
+          document.getElementById("word").innerHTML = "All words have been displayed";
+          document.getElementById("showWordButton").style.display = "none";
+          return;
+        }
+        var randomIndex = Math.floor(Math.random() * fruits.length);
+        var word = fruits[randomIndex];
+        document.getElementById("word").innerHTML = word;
+        displayed.push(word);
+        fruits.splice(randomIndex, 1);
+        document.getElementById("showWordButton").disabled = true;
+        localStorage.setItem("buttonClicked", true);
+      }
+      
       window.onload = function() {
-        if (localStorage.getItem("wordsShown")) {
-          var wordsShown = JSON.parse(localStorage.getItem("wordsShown"));
-        } else {
-          var wordsShown = [];
+        if (localStorage.getItem("buttonClicked") == "true") {
+          document.getElementById("showWordButton").disabled = true;
         }
-        if (wordsShown.length === 5) {
-          document.getElementById("myButton").disabled = true;
-        }
-      };
-      function displayWord() {
-    var words = ["Ethereal", "Serendipitous", "Pensive", "Luminous", "Whimsical"];
-    var wordsLeft = words.filter(word => !JSON.parse(localStorage.getItem("wordsShown")).includes(word));
-    if (wordsLeft.length === 0) {
-      document.getElementById("myButton").disabled = true;
-      return;
-    }
-    var randomIndex = Math.floor(Math.random() * wordsLeft.length);
-    document.getElementById("display").innerHTML = wordsLeft[randomIndex];
-    var wordsShown = JSON.parse(localStorage.getItem("wordsShown")) || [];
-    wordsShown.push(wordsLeft[randomIndex]);
-    localStorage.setItem("wordsShown", JSON.stringify(wordsShown));
-    if (wordsShown.length === 5) {
-      document.getElementById("myButton").disabled = true;
-    }
-  }
-</script>
+      }
+    </script>
   </head>
   <body>
-    <p> Hallo </p>
-    <button id="myButton" onclick="displayWord()">Display Word</button>
-    <p id="display"></p>
-    <p> Ea gibt einen Preis </p>
+    <h1>Fruit Word</h1>
+    <p id="word"></p>
+    <button id="showWordButton" onclick="showWord()">Show Word</button>
   </body>
 </html>
-
-
-
-
-
-
