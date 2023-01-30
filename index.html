@@ -2,23 +2,36 @@
 <html>
   <head>
     <script>
+      var fruitCounter = {};
+      var fruits = ["Apple", "Banana"];
+
       window.onload = function() {
-        if (localStorage.getItem("clicked")) {
+        if (!localStorage.getItem("fruitCounter")) {
+          localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
+        } else {
+          fruitCounter = JSON.parse(localStorage.getItem("fruitCounter"));
+        }
+        if (Object.values(fruitCounter).every(val => val >= 2)) {
           document.getElementById("myButton").disabled = true;
         }
       };
 
-      function displayWord() {
-        var words = ["Ethereal", "Serendipitous", "Pensive", "Luminous", "Whimsical"];
-        var randomIndex = Math.floor(Math.random() * words.length);
-        document.getElementById("display").innerHTML = words[randomIndex];
-        document.getElementById("myButton").disabled = true;
-        localStorage.setItem("clicked", true);
+      function displayFruit() {
+        var randomIndex = Math.floor(Math.random() * fruits.length);
+        while (fruitCounter[fruits[randomIndex]] >= 2) {
+          randomIndex = Math.floor(Math.random() * fruits.length);
+        }
+        document.getElementById("display").innerHTML = fruits[randomIndex];
+        fruitCounter[fruits[randomIndex]] = (fruitCounter[fruits[randomIndex]] || 0) + 1;
+        localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
+        if (Object.values(fruitCounter).every(val => val >= 2)) {
+          document.getElementById("myButton").disabled = true;
+        }
       }
     </script>
   </head>
   <body>
-    <button id="myButton" onclick="displayWord()">Display Word</button>
+    <button id="myButton" onclick="displayFruit()">Display Fruit</button>
     <p id="display"></p>
   </body>
 </html>
