@@ -2,28 +2,43 @@
 <html>
   <head>
     <script>
+      var fruitCounter = {};
+      var fruits = ["Apple", "Banana", "Cherry", "Grape", "Kiwi"];
+
       window.onload = function() {
-        if (localStorage.getItem("clicked")) {
+        if (!localStorage.getItem("fruitCounter")) {
+          localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
+        } else {
+          fruitCounter = JSON.parse(localStorage.getItem("fruitCounter"));
+        }
+        if (Object.values(fruitCounter).every(val => val >= 2)) {
           document.getElementById("myButton").disabled = true;
         }
       };
 
-      function displayWord() {
-        var words = ["A", "a", "B", "b", "C", "c" ];
-        var randomIndex = Math.floor(Math.random() * words.length);
-        document.getElementById("display").innerHTML = words[randomIndex];
-        document.getElementById("myButton").disabled = true;
-        localStorage.setItem("clicked", true);
+      function displayFruit() {
+        var randomIndex = Math.floor(Math.random() * fruits.length);
+        while (fruitCounter[fruits[randomIndex]] >= 2) {
+          randomIndex = Math.floor(Math.random() * fruits.length);
+        }
+        document.getElementById("display").innerHTML = fruits[randomIndex];
+        fruitCounter[fruits[randomIndex]] = (fruitCounter[fruits[randomIndex]] || 0) + 1;
+        localStorage.setItem("fruitCounter", JSON.stringify(fruitCounter));
+        if (Object.values(fruitCounter).every(val => val >= 2)) {
+          document.getElementById("myButton").disabled = true;
+        }
       }
     </script>
   </head>
   <body>
-    <p>Hallo<br />Klicke auf diesen Button um dein Wort zu erhalten.</p>
-    <button id="myButton" onclick="displayWord()">Display Word</button>
+     <p>Hallo<br />Klicke auf diesen Button um dein Wort zu erhalten.</p>
+    <button id="myButton" onclick="displayFruit()">Display Fruit</button>
     <p id="display"></p>
 <p>Mach am besten einen Screenshot, um das Wort nicht zu vergessen.</p>
 <p>Mach mit der Person ein Bild und schick es mir</p>   
 <p>Für jedes Paar gibt es einen Preis</p>
   </body>
 </html>
+
+
 
