@@ -16,6 +16,12 @@
           return displayed.indexOf(fruit) == -1;
         });
         
+        if (localStorage.getItem("buttonClicked") == "true") {
+          document.getElementById("word").innerHTML = "Button has already been clicked";
+          document.getElementById("showWordButton").style.display = "none";
+          return;
+        }
+        
         var randomIndex = Math.floor(Math.random() * fruits.length);
         var word = fruits[randomIndex];
         document.getElementById("word").innerHTML = word;
@@ -23,6 +29,7 @@
         localStorage.setItem("displayedWords", JSON.stringify(displayed));
         fruits.splice(randomIndex, 1);
         document.getElementById("showWordButton").disabled = true;
+        localStorage.setItem("buttonClicked", true);
       }
     </script>
   </head>
@@ -31,10 +38,10 @@
     <p>Klicke hier um ein Wort zu erhalten.</p>
     <p id="word"></p>
     <button id="showWordButton" onclick="showWord()">Show Word</button>
-    
-<p>Mach am besten einen Screenshot, um das Wort nicht zu vergessen.</p>
+    <p>Mach am besten einen Screenshot, um das Wort nicht zu vergessen.</p>
 <p>Finde die Person mit dem gleichen Wort.</p>
 <p>Schickt mir ein Bild von euch.</p>
 <p>Für jedes Paar gibt es einen Preis.</p>
   </body>
 </html>
+
